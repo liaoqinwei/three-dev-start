@@ -1,4 +1,4 @@
-import {  Sprite, SpriteMaterial } from 'three';
+import {  Camera, Scene, Sprite, SpriteMaterial } from 'three';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import { CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
 import { ComponentOptionsBase } from 'vue';
@@ -23,6 +23,8 @@ export class Popup2D extends CSS2DObject {
 export class Popup3D extends CSS3DObject {
   style: CSSStyleDeclaration
   name: string = "Popup3D"
+  frontView:boolean = false
+
   constructor(html: string, options: { position?: vec3 } = {}) {
     const { position = [0, 0, 0] } = options
 
@@ -32,6 +34,11 @@ export class Popup3D extends CSS3DObject {
     this.style = element.style
     this.position.set(position[0], position[1], position[2])
   }
+
+  onBeforeRender(renderer: unknown, scene: Scene, camera: Camera) {
+    super.onBeforeRender(renderer,scene,camera)
+    if(this.frontView)this.rotation.setFromRotationMatrix(camera.matrixWorld)
+  };
 }
 
 export class PopupSprite extends Sprite {

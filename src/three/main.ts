@@ -65,13 +65,7 @@ export default function () {
   // Popup3D
   getVuePopupString(ThreePopup3D).then((vueComponentStr: string) => {
     const p = new Popup3D(vueComponentStr,{position:[0,-11,0]})
-    let i = 0
-    container.addEventListener("beforeRender",(e)=>{
-      
-      // p.rotation.set(0,e.target.camera.rotation.y,0)
-      // console.log(e.target.camera.rotation.y/Math.PI*180+90)
-
-    })
+    p.frontView = true
     p.scale.set(.01,.01,.01)
     container.scene.add(p)
   })

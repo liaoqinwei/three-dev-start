@@ -4,6 +4,7 @@ import { immediateRender } from "./helper"
 import CameraControls from "camera-controls"
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer';
+import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer"
 
 
 CameraControls.install({ THREE: THREE });
@@ -58,8 +59,9 @@ class Container extends THREE.EventDispatcher<{ type: "beforeRender" | "afterRen
   camera: THREE.Camera
   clock: THREE.Clock
   css2DRenderer: CSS2DRenderer
-  css3DRenderer: CSS3DRenderer
+  css3DRenderer: CSS3DRenderer 
   canvas: HTMLCanvasElement
+  effectComposer :EffectComposer
 
 
   constructor(
@@ -71,15 +73,18 @@ class Container extends THREE.EventDispatcher<{ type: "beforeRender" | "afterRen
 
     this.css2DRenderer = new CSS2DRenderer();
     this.css3DRenderer = new CSS3DRenderer()
-    this._initCssRenderer()
-
 
     this.renderer = new THREE.WebGLRenderer(Object.assign
       <THREE.WebGLRendererParameters, THREE.WebGLRendererParameters>(rendererConfig, { canvas }));
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.01, 1000);
     this.cameraControls = new CameraControls(this.camera as THREE.PerspectiveCamera, this.css2DRenderer.domElement);
-    this.clock = new THREE.Clock
+    this.clock = new THREE.Clock  
+
+    this._initCssRenderer()
+    this._initProcessing()
+
+
 
 
 
@@ -108,4 +113,10 @@ class Container extends THREE.EventDispatcher<{ type: "beforeRender" | "afterRen
     this.css2DRenderer.domElement.style.zIndex = "1"
   }
 
+  private _initProcessing(){
+    this.effectComposer = new EffectComposer(this.renderer)
+  }
+
+
+ 
 }

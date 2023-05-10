@@ -14,7 +14,7 @@ const info = ref('ThreePopup3D')
 .title{
   font-size: 20px;
   color: green;
-  background-color: red;
+  background-color: #FFF;
 }
 
 

@@ -5,13 +5,9 @@ import { PCDLoader } from 'three/examples/jsm/loaders/PCDLoader';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
-
-
 type CrossLoadAssetsType = THREE.Mesh | GLTF | THREE.Group | THREE.Points | THREE.SkinnedMesh | THREE.BufferGeometry
 
 const suffixReg = /\.([a-zA-Z]+)$/
-
-
 
 export default class CrossLoader {
   publicPath: string
